@@ -60,9 +60,9 @@ namespace StarlightDrifter.StarFighter
                 {
                     ""name"": ""negative"",
                     ""id"": ""0a9895a9-2c6c-455d-a1ba-faa6409a5a28"",
-                    ""path"": ""<Keyboard>/s"",
+                    ""path"": ""<Mouse>/delta/y"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""Invert"",
                     ""groups"": ""Mouse and Keyboard"",
                     ""action"": ""Pitch"",
                     ""isComposite"": false,
@@ -71,7 +71,7 @@ namespace StarlightDrifter.StarFighter
                 {
                     ""name"": ""positive"",
                     ""id"": ""251e9366-c07b-4c9d-95c3-459ca4accc37"",
-                    ""path"": ""<Keyboard>/w"",
+                    ""path"": ""<Mouse>/delta/y"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Mouse and Keyboard"",
@@ -93,9 +93,9 @@ namespace StarlightDrifter.StarFighter
                 {
                     ""name"": ""negative"",
                     ""id"": ""345f45af-ed35-4e50-805c-37ea9d43209c"",
-                    ""path"": ""<Keyboard>/a"",
+                    ""path"": ""<Mouse>/delta/x"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""Invert"",
                     ""groups"": ""Mouse and Keyboard"",
                     ""action"": ""Yaw"",
                     ""isComposite"": false,
@@ -104,7 +104,7 @@ namespace StarlightDrifter.StarFighter
                 {
                     ""name"": ""positive"",
                     ""id"": ""0f4be330-5f56-48ec-9ce2-22701935ea4f"",
-                    ""path"": ""<Keyboard>/d"",
+                    ""path"": ""<Mouse>/delta/x"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Mouse and Keyboard"",
@@ -126,7 +126,7 @@ namespace StarlightDrifter.StarFighter
                 {
                     ""name"": ""negative"",
                     ""id"": ""d3cb4b3a-0c04-4015-8f6b-7bc53f609027"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Mouse and Keyboard"",
@@ -137,7 +137,7 @@ namespace StarlightDrifter.StarFighter
                 {
                     ""name"": ""positive"",
                     ""id"": ""8ec7f649-eedd-4972-bd0b-58af49f61675"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Mouse and Keyboard"",
