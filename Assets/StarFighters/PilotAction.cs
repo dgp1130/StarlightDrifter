@@ -9,15 +9,11 @@ namespace StarlightDrifter.StarFighters
      * aircraft. For example, pulling a joystick all the way to the right would represent a
      * maximum clockwise roll (`roll = 1`), while pressing a break pedal half way might represent
      * half deceleration (`thrust = -0.5`).
-     * 
-     * TODO: `pitch` and `yaw` are currently defined in terms of pixels moved by a mouse, but this
-     * is temporary as it leaks the mouse abstraction into this type. These should also be clamped
-     * to [-1, 1].
      */
     class PilotAction
     {
         /**
-         * Represnts the number of pixels the user has moved the mouse across the pitch axis.
+         * Represnts rotation around the pitch axis, clamped to [-1, 1].
          * Positive values represent a desire to pitch upwards.
          * Negative values represent a desire to pitch downwards.
          * A zero value represents no change to the pitch.
@@ -25,7 +21,7 @@ namespace StarlightDrifter.StarFighters
         public readonly float pitch;
 
         /**
-         * Represnts the number of pixels the user has moved the mouse across the yaw axis.
+         * Represents rotation around the yaw axis, clamped to [-1, 1].
          * Positive values represent a desire to yaw right.
          * Negative values represent a desire to yaw left.
          * A zero value represents no change to the yaw.

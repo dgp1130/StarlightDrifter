@@ -15,6 +15,8 @@ namespace StarlightDrifter.StarFighters
     {
         private StarFighterControls controls = null!;
 
+        [SerializeField] private float maxMouseDeltaPixels = 50;
+
         private float pitchDeltaPixels;
         private float yawDeltaPixels;
         private float rollDelta;
@@ -53,12 +55,18 @@ namespace StarlightDrifter.StarFighters
             };
         }
 
+        /** Flushes the pilot's actions and returns a `PilotAction` of the desired movement. */
         public PilotAction Act()
         {
+            // Restrict to the maximum delta, if the mouse moved farther than that,
+            // then we assume user desired maximum movement in that direction.
+            var pitchDelta = Mathf.Clamp(pitchDeltaPixels / maxMouseDeltaPixels, -1, 1);
+            var yawDelta = Mathf.Clamp(yawDeltaPixels / maxMouseDeltaPixels, -1, 1);
+
             // Generate an action from values accumulated over the last frame.
             var action = new PilotAction(
-                pitch: pitchDeltaPixels,
-                yaw: yawDeltaPixels,
+                pitch: pitchDelta,
+                yaw: yawDelta,
                 roll: rollDelta,
                 thrust: thrustDelta
             );

@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbda17bb7a5b2854b9a2714fd0e90cae, type: 3}
   m_Name: Pilot
   m_EditorClassIdentifier: 
+  maxMouseRadius: 50
