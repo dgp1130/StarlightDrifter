@@ -2,7 +2,7 @@
 
 #nullable enable
 
-namespace StarlightDrifter.StarFighter
+namespace StarlightDrifter.StarFighters
 {
     /**
      * Represents a "pilot", responsible for controlling a StarFighter.

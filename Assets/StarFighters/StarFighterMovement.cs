@@ -2,7 +2,7 @@
 
 #nullable enable
 
-namespace StarlightDrifter.StarFighter
+namespace StarlightDrifter.StarFighters
 {
     [RequireComponent(typeof(Rigidbody))]
     public class StarFighterMovement : MonoBehaviour

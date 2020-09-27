@@ -1,6 +1,6 @@
 ﻿#nullable enable
 
-namespace StarlightDrifter.StarFighter
+namespace StarlightDrifter.StarFighters
 {
     /**
      * Record class representing a pilot's intent over a period of time (usually a frame).

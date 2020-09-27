@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-namespace StarlightDrifter.StarFighter
+namespace StarlightDrifter.StarFighters
 {
     public class @StarFighterControls : IInputActionCollection, IDisposable
     {
