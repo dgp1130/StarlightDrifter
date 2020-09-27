@@ -296,8 +296,8 @@ Rigidbody:
   m_GameObject: {fileID: 727764043}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Drag: 0.1
+  m_AngularDrag: 2
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -314,6 +314,10 @@ PrefabInstance:
       propertyPath: pilot
       value: 
       objectReference: {fileID: 11400000, guid: b287cf4ccb0d6be4db985dbfba10338c, type: 2}
+    - target: {fileID: -2438207225797755301, guid: 36f14fc52a556dc4aa3a9370f4926096, type: 3}
+      propertyPath: stats
+      value: 
+      objectReference: {fileID: 11400000, guid: 2b815dbaf6bcd0842b16a397ea5ac3fa, type: 2}
     - target: {fileID: 1694974039946202, guid: 36f14fc52a556dc4aa3a9370f4926096, type: 3}
       propertyPath: m_Name
       value: StarFighter 1

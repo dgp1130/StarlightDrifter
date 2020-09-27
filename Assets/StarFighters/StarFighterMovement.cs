@@ -8,6 +8,7 @@ namespace StarlightDrifter.StarFighters
     public class StarFighterMovement : MonoBehaviour
     {
         [SerializeField] private StarFighterPilot pilot = null!;
+        [SerializeField] private StarFighterStats stats = null!;
 
         private Vector3 pitchAxis => transform.TransformDirection(Vector3.left);
         private Vector3 yawAxis => transform.TransformDirection(Vector3.up);
@@ -31,10 +32,10 @@ namespace StarlightDrifter.StarFighters
             // we could linearly interpolate the previous frame's rotation/thrust and the new frame's rotation/thrust, then
             // sample that interpolation N times, applying that force scaled by `Time.deltaTime / N` to more accurately simulate
             // the intended movement from the player.
-            if (action.pitch != 0) body.AddTorque(pitchAxis * 1000 * action.pitch * Time.deltaTime, ForceMode.Force);
-            if (action.yaw != 0) body.AddTorque(yawAxis * 1000 * action.yaw * Time.deltaTime, ForceMode.Force);
-            if (action.roll != 0) body.AddTorque(rollAxis * 10 * action.roll * Time.deltaTime, ForceMode.Force);
-            if (action.thrust != 0) body.AddForce(forward * 100 * action.thrust * Time.deltaTime, ForceMode.Force);
+            if (action.pitch != 0) body.AddTorque(pitchAxis * stats.PitchScalar * action.pitch * Time.deltaTime, ForceMode.Force);
+            if (action.yaw != 0) body.AddTorque(yawAxis * stats.YawScalar * action.yaw * Time.deltaTime, ForceMode.Force);
+            if (action.roll != 0) body.AddTorque(rollAxis * stats.RollScalar * action.roll * Time.deltaTime, ForceMode.Force);
+            if (action.thrust != 0) body.AddForce(forward * stats.ThrustScalar * action.thrust * Time.deltaTime, ForceMode.Force);
         }
     }
 }
