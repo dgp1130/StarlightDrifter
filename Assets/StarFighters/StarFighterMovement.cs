@@ -10,9 +10,12 @@ namespace StarlightDrifter.StarFighter
         private Vector3 yawAxis => transform.TransformDirection(Vector3.up);
         private Vector3 rollAxis => transform.TransformDirection(Vector3.back);
 
+        private Vector3 forward => transform.TransformDirection(Vector3.forward);
+
         private float pitchDeltaPixels = 0;
         private float yawDeltaPixels = 0;
-        private float rollDirection = 0;
+        private float rollDelta = 0;
+        private float thrustDelta;
 
         private Rigidbody? body; // Body may be null when drawing Gizmos.
 
@@ -26,7 +29,6 @@ namespace StarlightDrifter.StarFighter
         public void Start()
         {
             body = GetComponent<Rigidbody>();
-            body.AddForce(transform.forward * 10, ForceMode.VelocityChange);
 
             controls.StarFighter.Pitch.performed += (ctx) =>
             {
@@ -43,11 +45,21 @@ namespace StarlightDrifter.StarFighter
             controls.StarFighter.Roll.started += (ctx) =>
             {
                 var roll = ctx.ReadValue<float>();
-                rollDirection = roll;
+                rollDelta = roll;
             };
             controls.StarFighter.Roll.canceled += (ctx) =>
             {
-                rollDirection = 0;
+                rollDelta = 0;
+            };
+
+            controls.StarFighter.Thrust.started += (ctx) =>
+            {
+                var thrust = ctx.ReadValue<float>();
+                thrustDelta = thrust;
+            };
+            controls.StarFighter.Thrust.canceled += (ctx) =>
+            {
+                thrustDelta = 0;
             };
         }
 
@@ -68,30 +80,39 @@ namespace StarlightDrifter.StarFighter
                 yawDeltaPixels = 0;
             }
 
-            if (rollDirection != 0)
+            if (rollDelta != 0)
             {
-                body.AddTorque(rollAxis * 10 * rollDirection * Time.deltaTime, ForceMode.Force);
+                body.AddTorque(rollAxis * 10 * rollDelta * Time.deltaTime, ForceMode.Force);
+            }
+
+            if (thrustDelta != 0)
+            {
+                body.AddForce(forward * 100 * thrustDelta * Time.deltaTime, ForceMode.Force);
             }
         }
 
         [SerializeField] private Vector3 rotationalMomentumGizmosDrawOffset;
-        private Vector3 rotMomentumGizmosDrawPoint => transform.position + transform.TransformDirection(rotationalMomentumGizmosDrawOffset);
+        private Vector3 momentumGizmosDrawPoint => transform.position + transform.TransformDirection(rotationalMomentumGizmosDrawOffset);
         public void OnDrawGizmosSelected()
         {
             if (body == null) return;
 
+            // Draw velocity vectory.
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawRay(momentumGizmosDrawPoint, body.velocity);
+
             // Draw vectors representing rotational momentum.
             Gizmos.color = Color.red;
             var pitchMagnitude = Vector3.Dot(body.angularVelocity, pitchAxis);
-            Gizmos.DrawRay(rotMomentumGizmosDrawPoint, -pitchAxis * pitchMagnitude);
+            Gizmos.DrawRay(momentumGizmosDrawPoint, -pitchAxis * pitchMagnitude);
 
             Gizmos.color = Color.green;
             var yawMagnitude = Vector3.Dot(body.angularVelocity, yawAxis);
-            Gizmos.DrawRay(rotMomentumGizmosDrawPoint, yawAxis * yawMagnitude);
+            Gizmos.DrawRay(momentumGizmosDrawPoint, yawAxis * yawMagnitude);
 
             Gizmos.color = Color.blue;
             var rollMagnitude = Vector3.Dot(body.angularVelocity, rollAxis);
-            Gizmos.DrawRay(rotMomentumGizmosDrawPoint, -rollAxis * rollMagnitude);
+            Gizmos.DrawRay(momentumGizmosDrawPoint, -rollAxis * rollMagnitude);
         }
 
         public void OnEnable()

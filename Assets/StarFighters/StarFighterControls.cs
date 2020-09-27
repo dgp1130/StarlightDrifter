@@ -43,6 +43,14 @@ namespace StarlightDrifter.StarFighter
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Thrust"",
+                    ""type"": ""Button"",
+                    ""id"": ""6ca935de-1f3b-4355-8b9f-bdae27bc66c4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -144,6 +152,39 @@ namespace StarlightDrifter.StarFighter
                     ""action"": ""Roll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""7560474a-ba6c-4b51-bc14-0d1e32bc4601"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Thrust"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""31dac324-d0ea-4d00-8147-4fa06721e94d"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Thrust"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""c7656678-71c1-4931-bab7-12d46895a19f"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Thrust"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -172,6 +213,7 @@ namespace StarlightDrifter.StarFighter
             m_StarFighter_Pitch = m_StarFighter.FindAction("Pitch", throwIfNotFound: true);
             m_StarFighter_Yaw = m_StarFighter.FindAction("Yaw", throwIfNotFound: true);
             m_StarFighter_Roll = m_StarFighter.FindAction("Roll", throwIfNotFound: true);
+            m_StarFighter_Thrust = m_StarFighter.FindAction("Thrust", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -224,6 +266,7 @@ namespace StarlightDrifter.StarFighter
         private readonly InputAction m_StarFighter_Pitch;
         private readonly InputAction m_StarFighter_Yaw;
         private readonly InputAction m_StarFighter_Roll;
+        private readonly InputAction m_StarFighter_Thrust;
         public struct StarFighterActions
         {
             private @StarFighterControls m_Wrapper;
@@ -231,6 +274,7 @@ namespace StarlightDrifter.StarFighter
             public InputAction @Pitch => m_Wrapper.m_StarFighter_Pitch;
             public InputAction @Yaw => m_Wrapper.m_StarFighter_Yaw;
             public InputAction @Roll => m_Wrapper.m_StarFighter_Roll;
+            public InputAction @Thrust => m_Wrapper.m_StarFighter_Thrust;
             public InputActionMap Get() { return m_Wrapper.m_StarFighter; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -249,6 +293,9 @@ namespace StarlightDrifter.StarFighter
                     @Roll.started -= m_Wrapper.m_StarFighterActionsCallbackInterface.OnRoll;
                     @Roll.performed -= m_Wrapper.m_StarFighterActionsCallbackInterface.OnRoll;
                     @Roll.canceled -= m_Wrapper.m_StarFighterActionsCallbackInterface.OnRoll;
+                    @Thrust.started -= m_Wrapper.m_StarFighterActionsCallbackInterface.OnThrust;
+                    @Thrust.performed -= m_Wrapper.m_StarFighterActionsCallbackInterface.OnThrust;
+                    @Thrust.canceled -= m_Wrapper.m_StarFighterActionsCallbackInterface.OnThrust;
                 }
                 m_Wrapper.m_StarFighterActionsCallbackInterface = instance;
                 if (instance != null)
@@ -262,6 +309,9 @@ namespace StarlightDrifter.StarFighter
                     @Roll.started += instance.OnRoll;
                     @Roll.performed += instance.OnRoll;
                     @Roll.canceled += instance.OnRoll;
+                    @Thrust.started += instance.OnThrust;
+                    @Thrust.performed += instance.OnThrust;
+                    @Thrust.canceled += instance.OnThrust;
                 }
             }
         }
@@ -280,6 +330,7 @@ namespace StarlightDrifter.StarFighter
             void OnPitch(InputAction.CallbackContext context);
             void OnYaw(InputAction.CallbackContext context);
             void OnRoll(InputAction.CallbackContext context);
+            void OnThrust(InputAction.CallbackContext context);
         }
     }
 }
