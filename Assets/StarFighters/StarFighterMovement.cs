@@ -4,6 +4,7 @@
 
 namespace StarlightDrifter.StarFighter
 {
+    [RequireComponent(typeof(Rigidbody))]
     public class StarFighterMovement : MonoBehaviour
     {
         [SerializeField] private StarFighterPilot pilot = null!;
@@ -11,10 +12,9 @@ namespace StarlightDrifter.StarFighter
         private Vector3 pitchAxis => transform.TransformDirection(Vector3.left);
         private Vector3 yawAxis => transform.TransformDirection(Vector3.up);
         private Vector3 rollAxis => transform.TransformDirection(Vector3.back);
-
         private Vector3 forward => transform.TransformDirection(Vector3.forward);
 
-        private Rigidbody? body; // Body may be null when drawing Gizmos.
+        private Rigidbody body = null!;
 
         public void Start()
         {
@@ -24,8 +24,6 @@ namespace StarlightDrifter.StarFighter
 
         public void FixedUpdate()
         {
-            if (body == null) return;
-
             var action = pilot.Act();
 
             // TODO: Order here matters, because thrust can be applied before or after rotation is applied, affecting movement.
@@ -37,30 +35,6 @@ namespace StarlightDrifter.StarFighter
             if (action.yaw != 0) body.AddTorque(yawAxis * 10 * action.yaw * Time.deltaTime, ForceMode.Force);
             if (action.roll != 0) body.AddTorque(rollAxis * 10 * action.roll * Time.deltaTime, ForceMode.Force);
             if (action.thrust != 0) body.AddForce(forward * 100 * action.thrust * Time.deltaTime, ForceMode.Force);
-        }
-
-        [SerializeField] private Vector3 rotationalMomentumGizmosDrawOffset;
-        private Vector3 momentumGizmosDrawPoint => transform.position + transform.TransformDirection(rotationalMomentumGizmosDrawOffset);
-        public void OnDrawGizmosSelected()
-        {
-            if (body == null) return;
-
-            // Draw velocity vectory.
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawRay(momentumGizmosDrawPoint, body.velocity);
-
-            // Draw vectors representing rotational momentum.
-            Gizmos.color = Color.red;
-            var pitchMagnitude = Vector3.Dot(body.angularVelocity, pitchAxis);
-            Gizmos.DrawRay(momentumGizmosDrawPoint, -pitchAxis * pitchMagnitude);
-
-            Gizmos.color = Color.green;
-            var yawMagnitude = Vector3.Dot(body.angularVelocity, yawAxis);
-            Gizmos.DrawRay(momentumGizmosDrawPoint, yawAxis * yawMagnitude);
-
-            Gizmos.color = Color.blue;
-            var rollMagnitude = Vector3.Dot(body.angularVelocity, rollAxis);
-            Gizmos.DrawRay(momentumGizmosDrawPoint, -rollAxis * rollMagnitude);
         }
     }
 }
